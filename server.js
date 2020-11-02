@@ -19,7 +19,6 @@ app.get("/bookings", function (request, response) {
 });
 
 //Read one booking, specified by an ID
-///SEARCH USER WITH ID///
 app.get('/bookings/:id', function(req, res) {
   if(isNaN( req.params.id)){
     res.send({
@@ -36,14 +35,18 @@ app.get('/bookings/:id', function(req, res) {
  }
   }
 });
-/// Delete user with ID//
 
+/// Delete user with ID//
 app.delete('/bookings/:id', function(request, response) {
   let messageId = Number(request.params.id)
   let index = bookings.findIndex(message=> message.id === messageId)
   let deleted = bookings.splice(index, 1)
   response.json(bookings);
 });
+
+
+
+
 const listener = app.listen(process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
