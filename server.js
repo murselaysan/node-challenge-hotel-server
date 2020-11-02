@@ -18,6 +18,25 @@ app.get("/bookings", function (request, response) {
   response.send(bookings);
 });
 
+//Read one booking, specified by an ID
+///SEARCH USER WITH ID///
+app.get('/bookings/:id', function(req, res) {
+  if(isNaN( req.params.id)){
+    res.send({
+        "message": "undefined message"
+    })
+  }else{
+ const message = bookings.find(u => u.id==req.params.id)
+ if(message){
+     res.send(message)
+ }else{
+     res.send({
+         "message" : "Data Did Not Find"
+     })
+ }
+  }
+});
+
 const listener = app.listen(process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
