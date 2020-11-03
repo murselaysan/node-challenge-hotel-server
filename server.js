@@ -46,31 +46,32 @@ app.delete('/bookings/:id', function(request, response) {
 
 //create new  booking
 app.post("/bookings", (req, res) => {
-  let {
+  let newId = bookings[bookings.length -1].id + 1
+  let newRoomId = bookings[bookings.length -1].id + 1
+  let newBooking= {
+    id:req.body.newId,
     title,
     firstName,
     surname,
     email,
-    roomId,
+    roomId:req.body.newRoomId,
     checkInDate,
     checkOutDate
   } = req.body;
-  if (checkInDate => checkOutDate) {	  
-    res.send("Check-Out date should be later than Check-In date");
-    } else if (
-      title.length > 0 &&
-      firstName.length > 0 &&
-      surname.length > 0 &&
-      email.length > 0 &&
-      typeof roomId == "number" &&
-      checkInDate.length > 0 &&
-      checkOutDate.length > 0
-    ) {
-      bookings.push(req.body);
-      res.send({ booking: "success" });
-    } else {
-      res.status(404).send("Please complete the booking form");
-    }
+  if (
+    !newBooking.id ||
+    !newBooking.title ||
+    !newBooking.firstName ||
+    !newBooking.surname ||
+    !newBooking.email ||
+    !newBooking.roomId ||
+    !newBooking.checkInDate ||
+    !newBooking.checkOutDate
+  )
+    return res.status(400).send("Please Enter All data");
+
+  bookings.push(newBooking);
+  res.json(bookings);
   });
 
 
