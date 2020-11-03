@@ -44,7 +44,17 @@ app.delete('/bookings/:id', function(request, response) {
   response.json(bookings);
 });
 
-
+//create new  booking
+app.post("/bookings", (req, res) => {
+  let {
+    title,
+    firstName,
+    surname,
+    email,
+    roomId,
+    checkInDate,
+    checkOutDate
+  } = req.body;
 
 
 const listener = app.listen(process.env.PORT, function () {
