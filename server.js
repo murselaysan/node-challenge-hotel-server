@@ -55,8 +55,7 @@ app.post("/bookings", (req, res) => {
     checkInDate,
     checkOutDate
   } = req.body;
-  if (checkInDate => checkOutDate) {
-    console.log("Your app is listening on port " + listener.address().port);	  
+  if (checkInDate => checkOutDate) {	  
     res.send("Check-Out date should be later than Check-In date");
     } else if (
       title.length > 0 &&
