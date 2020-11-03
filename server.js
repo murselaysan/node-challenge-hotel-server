@@ -55,6 +55,24 @@ app.post("/bookings", (req, res) => {
     checkInDate,
     checkOutDate
   } = req.body;
+  if (checkInDate => checkOutDate) {
+    console.log("Your app is listening on port " + listener.address().port);	  
+    res.send("Check-Out date should be later than Check-In date");
+    } else if (
+      title.length > 0 &&
+      firstName.length > 0 &&
+      surname.length > 0 &&
+      email.length > 0 &&
+      typeof roomId == "number" &&
+      checkInDate.length > 0 &&
+      checkOutDate.length > 0
+    ) {
+      bookings.push(req.body);
+      res.send({ booking: "success" });
+    } else {
+      res.status(404).send("Please complete the booking form");
+    }
+  });
 
 
 const listener = app.listen(process.env.PORT, function () {
