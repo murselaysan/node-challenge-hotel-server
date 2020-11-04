@@ -85,6 +85,46 @@ app.post("/bookings", (req, res) => {
   }
 });
 
+app.get("/bookings/search", function (request, response) {
+  const queryDate = request.query.date;
+  const term = request.query.term;
+  if (!term && !queryDate) {
+    response.status(400).json("what are you doing here");
+    return;
+  }
+
+  if (moment(queryDate, "YYYY-MM-DD", true).isValid()) {
+    let result = bookings.filter(
+      (booking) =>
+        moment(queryDate).isBetween(
+          booking.checkInDate,
+          booking.checkOutDate
+        ) ||
+        moment(queryDate).isSame(booking.checkInDate) ||
+        moment(queryDate).isSame(booking.checkOutDate)
+    );
+    result.length > 0
+      ? response.send(result)
+      : response.send("Not found a booking ton this date");
+    return;
+  } else if (queryDate) {
+    response
+      .status(400)
+      .json('Please enter a valid date, format should like "YYYY-MM-DD"');
+    return;
+  }
+  const searchTerm = bookings.filter((booking) =>
+    `${booking.firstName} ${booking.surname} ${booking.email}`
+      .toLowerCase()
+      .includes(term.toLowerCase())
+  );
+  if (term && searchTerm.length > 0) {
+    response.json(searchTerm);
+  } else if (term) {
+    response.status(400).json("Sorry we couldn't find your term");
+  }
+});
+
 const listener = app.listen(process.env.PORT, function () {
   console.log("Your app is listening on port " + listener.address().port);
 });
